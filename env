@@ -1,0 +1,2 @@
+MONGO_URI=mongodb://localhost:27017/interior_design
+PORT=5000

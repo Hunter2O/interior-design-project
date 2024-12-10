@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Contact Us</h1>
+  <form id="contactForm" enctype="multipart/form-data">
+    <input type="email" id="email" placeholder="Your Email" required>
+    <textarea id="modifications" rows="5" placeholder="Enter your modifications or additional details"></textarea>
+    <input type="hidden" id="designInput" name="design">
+    <label for="image">Upload an Image (optional):</label>
+    <input type="file" id="image" name="image" accept="image/*">
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    // Get the selected design from the query string
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedDesign = urlParams.get('design');
+    
+    if (selectedDesign) {
+      document.getElementById('designInput').value = selectedDesign;
+    } else {
+      alert('No design selected. Please go back and select a design.');
+    }
+
+    // Handle form submission
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const modifications = document.getElementById('modifications').value;
+      const design = document.getElementById('designInput').value;
+      const image = document.getElementById('image').files[0];
+
+      if (!email || !modifications || !design) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('email', email);
+      formData.append('modifications', modifications);
+      formData.append('design', design);
+      if (image) {
+        formData.append('image', image);
+      }
+
+      fetch('/api/submit-request', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert(data.message || 'Request submitted successfully!');
+      })
+      .catch(error => {
+        alert('Error submitting request. Please try again.');
+        console.error('Error:', error);
+      });
+    });
+  </script>
+</body>
+</html>

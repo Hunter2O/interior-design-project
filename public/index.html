@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interior Designs</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Choose Your Interior Design</h1>
+  <div class="designs">
+    <div class="design" onclick="selectDesign('Modern Living Room')">
+      <img src="images/living-room.jpg" alt="Modern Living Room">
+      <p>Modern Living Room</p>
+    </div>
+    <div class="design" onclick="selectDesign('Classic Bedroom')">
+      <img src="images/bedroom.jpg" alt="Classic Bedroom">
+      <p>Classic Bedroom</p>
+    </div>
+    <div class="design" onclick="selectDesign('Minimalist Kitchen')">
+      <img src="images/kitchen.jpg" alt="Minimalist Kitchen">
+      <p>Minimalist Kitchen</p>
+    </div>
+  </div>
+  <button id="continueBtn" onclick="goToContactPage()">Continue</button>
+
+  <script>
+    let selectedDesign = '';
+
+    function selectDesign(designName) {
+      selectedDesign = designName;
+      alert(`${designName} selected`);
+    }
+
+    function goToContactPage() {
+      if (selectedDesign === '') {
+        alert('Please select a design first!');
+      } else {
+        window.location.href = 'contact.html?design=' + encodeURIComponent(selectedDesign);
+      }
+    }
+  </script>
+</body>
+</html>
